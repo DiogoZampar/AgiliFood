@@ -1,0 +1,51 @@
+﻿@model IEnumerable<WebApplication3.Models.Pedido>
+
+@{
+    ViewData["Title"] = "Lista de Pedidos";
+}
+
+<h1>Histórico de pedidos</h1>
+
+@if(Model.Count() > 0)
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width:50%">
+                Restaurante
+            </th>
+            <th style="width:20%">
+                Total (R$)
+            </th>
+            <th style="width:20%">
+                Data e Hora
+            </th style="width:10%">
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-action="CardapioFornecedor" asp-controller="Pedidos" asp-route-id="@item.Fornecedor.Id">@Html.DisplayFor(modelItem => item.Fornecedor.Nome)</a>
+            </td>
+            <td style="font-weight:bold">
+                R$ @Html.DisplayFor(modelItem => item.ValorTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataPedido)
+            </td>
+            <td>
+                <a asp-action="Details" asp-controller="Pedidos" asp-route-id="@item.ID" >Mais detalhes</a>
+            </td>
+        </tr>
+}
+    </tbody>
+    </table>
+}
+else
+{
+    <h4>
+        Nenhum pedido no mês!
+    </h4>
+}

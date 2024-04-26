@@ -1,0 +1,80 @@
+﻿@model IEnumerable<WebApplication3.Models.Produto>
+
+@using Microsoft.AspNetCore.Identity
+@using WebApplication3.Areas.Identity.Data
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
+
+
+@{
+    ViewData["Title"] = "Meus produtos";
+}
+
+@if(Model.Count() > 0)
+{
+<h1>Meus Produtos</h1>
+
+    <a asp-action="Create" type="button" class="btn btn-success">Adicionar produto</a>
+    @if (User.IsInRole("FornecedorAtivo"))
+    {
+        <a asp-action="DesativarProdutos" asp-controller="Produtos" type="button" class="btn btn-danger">Desativar Produtos</a>
+    }
+    else
+    {
+        <a asp-action="AtivarProdutos" asp-controller="Produtos" type="button" class="btn btn-success">Ativar Produtos</a>
+    }
+        
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width:50%">
+                Produto
+            </th>
+            <th style="width:25%">
+                Preço
+            </th>
+            <th style="width:25%"></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Nome)</a>
+            </td>
+            <td style="font-weight:bold">
+                R$ @Html.DisplayFor(modelItem => item.Preco)
+            </td>
+            <td style="text-align:center">
+                
+                @if(UserManager.GetUserId(User)?.ToString() == @item.Fornecedor?.Id.ToString())
+                {
+                        <a asp-action="Edit" asp-route-id="@item.ID">Editar</a>
+                        <a asp-action="Delete" asp-route-id="@item.ID">Remover</a>
+                }
+            </td>
+        </tr>
+    }
+    
+
+
+        
+    </tbody>
+</table>
+
+    
+
+
+
+
+}else
+{
+<h4>Você não possui produtos cadastrados!</h4>
+
+    <p>
+        <a asp-action="Create">Adicionar produto</a>
+    </p>
+
+}

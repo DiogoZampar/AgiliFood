@@ -1,0 +1,97 @@
+﻿@model IEnumerable<WebApplication3.ViewModels.FechamentoMensalGeralDataModel>
+
+
+@{
+    ViewData["Title"] = "Fechamento Mensal Geral";
+    string ano = ViewBag.ano;
+    string mes = ViewBag.mes;
+}
+
+
+<div style="text-align:center">
+    <h1>Fechamento Mensal de @mes/@ano</h1>
+    <br />
+    <select id="month" style="text-align:center">
+        <option value="hide">-- Mês --</option>
+        <option value="1">Janeiro</option>
+        <option value="2">Fevereiro</option>
+        <option value="3">Março</option>
+        <option value="4">Abril</option>
+        <option value="5">Maio</option>
+        <option value="6">Junho</option>
+        <option value="7">Julho</option>
+        <option value="8">Agosto</option>
+        <option value="9">Setembro</option>
+        <option value="10">Outubro</option>
+        <option value="11">Novembro</option>
+        <option value="12">Dezembro</option>
+    </select>
+
+    <select id="year" style="text-align:center">
+        <option value="hide">-- Ano --</option>
+        <option value="2016">2016</option>
+        <option value="2017">2017</option>
+        <option value="2018">2018</option>
+        <option value="2019">2019</option>
+        <option value="2020">2020</option>
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+        <option value="2025">2025</option>
+    </select>
+    <br />
+    <br />
+    <button type="button" id="pesquisar-btn" class="btn btn-primary">
+        Pesquisar
+    </button>
+
+</div>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nome do funcionário
+            </th>
+            <th>
+                Número de pedidos
+            </th>
+            <th>
+                Total gasto (R$)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-action="IndexMensal" asp-controller="Pedidos" asp-route-id="@item.UsuarioId" asp-route-ano="@ano" asp-route-mes="@mes">@Html.DisplayFor(modelItem => item.UsuarioNome)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumPedidos)
+            </td>
+            <td>
+               R$ @Html.DisplayFor(modelItem => item.ValorTotal)
+            </td>
+            <td>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+<script>
+
+    document.getElementById('pesquisar-btn').onclick = () => {
+        let mes = document.getElementById("month").value;
+        let ano = document.getElementById("year").value;
+        location.assign("/Pedidos/FechamentoMensal?mes=" + mes + "&ano=" + ano);
+    }
+
+
+</script>

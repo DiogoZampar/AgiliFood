@@ -1,0 +1,41 @@
+﻿@using WebApplication3.Areas.Identity.Data
+
+@model IEnumerable<Usuario>
+
+
+
+@{
+    ViewData["Title"] = "Restaurantes";
+}
+
+<h1>Restaurantes disponíveis</h1>
+
+@if(Model.Count() > 0)
+{
+    
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="CardapioFornecedor" asp-controller="Pedidos" asp-route-id="@item.Id.ToString()">@Html.DisplayFor(modelItem => item.Nome)</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+    </table>
+}
+else
+{
+    <h4>Nenhum restaurante cadastrado!</h4>
+}
+

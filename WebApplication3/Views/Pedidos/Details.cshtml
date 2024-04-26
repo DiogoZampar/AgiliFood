@@ -1,0 +1,73 @@
+﻿@model WebApplication3.Models.Pedido
+
+@{
+    ViewData["Title"] = "Detalhes do pedido";
+}
+
+<h1>Detalhes do pedido</h1>
+
+<div>
+    <h4>Pedido</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-4">
+            Data e Hora
+        </dt>
+        <dt class="col-sm-4">
+            Restaurante
+        </dt>
+        <dt class="col-sm-2">
+            Valor Total
+        </dt>
+
+    </dl>
+    <dl class="row">
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.DataPedido)
+        </dd>
+        <dd class="col-sm-4">
+            @Html.DisplayFor(model => model.Fornecedor.Nome)
+        </dd>
+        <dd class="col-sm-2">
+            R$ @Html.DisplayFor(model => model.ValorTotal)
+        </dd>
+    </dl>
+</div>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Produto
+                </th>
+                <th>
+                    Preço
+                </th>
+                <th>
+                    Quantidade
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.DetalhesPedidos)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Produto.Nome)
+                    </td>
+                    <td>
+                        R$ @Html.DisplayFor(modelItem => item.Produto.Preco)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantidade)
+                    </td>
+                </tr>
+            }
+
+
+
+
+        </tbody>
+    </table>
+</div>
